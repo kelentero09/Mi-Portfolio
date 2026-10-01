@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Michael Entero monogram">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14181f" />
+      <stop offset="1" stop-color="#08090c" />
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7dd3fc" />
+      <stop offset="1" stop-color="#38bdf8" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bg)" />
+  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="13.25" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1.5" />
+  <g fill="none" stroke="url(#mark)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M24 20 L13 32 L24 44" />
+    <path d="M40 20 L51 32 L40 44" />
+  </g>
+  <path d="M35 17 L29 47" stroke="#e7eaf2" stroke-width="5" stroke-linecap="round" />
+</svg>

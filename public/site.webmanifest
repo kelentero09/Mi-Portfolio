@@ -1,0 +1,25 @@
+{
+  "name": "Michael Entero — Web Developer",
+  "short_name": "Michael Entero",
+  "description": "Michael Entero is a Web Developer specializing in modern, responsive websites and web applications using React, Next.js, TypeScript, and modern web technologies.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#08090c",
+  "theme_color": "#08090c",
+  "lang": "en",
+  "categories": ["portfolio", "developer"],
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
