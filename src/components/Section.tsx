@@ -29,7 +29,10 @@ export function Section({
     <Tag
       id={id}
       className={cn(
-        'relative scroll-mt-24',
+        // No `scroll-mt-*` here: the anchor offset is owned by
+        // `scroll-padding-top` on <html> in index.css. Setting both stacks
+        // them and strands the section below the header.
+        'relative',
         spacingMap[spacing],
         divided && 'border-t border-line',
         className,

@@ -94,14 +94,15 @@ export const projects: Project[] = [
   {
     slug: 'aoda',
     name: 'Aoda Gensets',
-    category: 'Business Website',
+    category: 'Business / Industrial Website',
     description:
-      'A business website project created for an industrial generator and power solutions company.',
+      'A website for a direct generator set supplier and importer, presenting brand-new gensets from 25kVA to 1000kVA for construction, commercial, and industrial use.',
     technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
+    demo: 'https://kelentero09.github.io/Aoda/',
     repository: 'https://github.com/kelentero09/Aoda',
     preview: './previews/aoda.jpg',
     previewAlt:
-      'Screenshot of the Aoda generator set supplier website repository on GitHub.',
+      'Screenshot of the Aoda Gensets website showing the generator set supplier homepage.',
     size: 'standard',
   },
 ];

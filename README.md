@@ -16,7 +16,7 @@ hosted anywhere.
 | SureParts OPC | https://sureparts.vercel.app/ |
 | Buildfolio | https://buildfolio-show.vercel.app/ |
 | ApexBuild | https://kelentero09.github.io/Apexbuild/ |
-| Aoda Gensets | https://github.com/kelentero09/Aoda |
+| Aoda Gensets | https://kelentero09.github.io/Aoda/ |
 | AI Tools Hub | https://ai-tools-hub-eta-lilac.vercel.app/ |
 
 ## Getting started

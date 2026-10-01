@@ -127,9 +127,21 @@
   }
 
   html {
-    scroll-padding-top: 5.5rem;
+    /* Single source of truth for in-page anchor offsets.
+       This replaces per-target `scroll-margin-top`, because the two stack:
+       the browser applies the target's scroll-margin and the container's
+       scroll-padding, which previously added up to 184px and left anchors
+       stranded well below the 81px header. Sized to the fixed header —
+       h-16 on mobile, h-20 from `lg` — plus a small gap. */
+    scroll-padding-top: 4.5rem;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+  }
+
+  @media (min-width: 64rem) {
+    html {
+      scroll-padding-top: 5.5rem;
+    }
   }
 
   body {
@@ -151,11 +163,6 @@
     outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 3px;
-  }
-
-  /* Reserve space for the sticky header when jumping to an anchor. */
-  section[id] {
-    scroll-margin-top: 5.5rem;
   }
 
   img {
