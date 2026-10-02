@@ -104,9 +104,10 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <article
       className={cn(
-        'relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface',
+        'relative flex h-full flex-col overflow-hidden rounded-2xl border border-line-strong bg-surface-2',
         'group transition-[border-color,box-shadow,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
-        'hover:-translate-y-1 hover:border-line-strong',
+        'shadow-soft',
+        'hover:-translate-y-1 hover:border-accent/40',
         'hover:shadow-[0_28px_52px_-30px_var(--glow)]',
         'motion-reduce:transition-none motion-reduce:hover:translate-y-0',
         // Featured cards split into preview + copy side by side on wide screens.

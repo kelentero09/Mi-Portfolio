@@ -2,7 +2,7 @@ import { Container } from '../components/Container';
 import { Section } from '../components/Section';
 import { Button } from '../components/Button';
 import { Reveal } from '../components/Reveal';
-import { Eyebrow } from '../components/Primitives';
+import { Eyebrow, Card } from '../components/Primitives';
 import { ArrowUpRightIcon, GitHubIcon, MailIcon, MapPinIcon } from '../components/Icons';
 import { Monogram } from '../components/Logo';
 import { contactContent, site } from '../data/site';
@@ -51,7 +51,7 @@ export function Contact() {
               </div>
 
               {/* details card */}
-              <div className="rounded-2xl border border-line bg-surface-2/50 p-6 sm:p-7">
+              <Card className="p-6 sm:p-7">
                 <div className="flex items-center gap-4">
                   <span className="grid size-12 shrink-0 place-items-center rounded-xl border border-line bg-surface text-accent">
                     <Monogram className="size-6" />
@@ -103,7 +103,7 @@ export function Contact() {
                     </dd>
                   </div>
                 </dl>
-              </div>
+              </Card>
             </div>
           </div>
         </Reveal>

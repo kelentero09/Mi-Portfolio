@@ -4,7 +4,7 @@ import { SectionHeading } from '../components/SectionHeading';
 import { Reveal } from '../components/Reveal';
 import { CheckIcon, ClockIcon, MailIcon, MapPinIcon } from '../components/Icons';
 import { Monogram } from '../components/Logo';
-import { TechBadge } from '../components/Primitives';
+import { TechBadge, Card } from '../components/Primitives';
 import { aboutContent, site } from '../data/site';
 
 const factRows = [
@@ -50,7 +50,7 @@ export function About() {
 
           {/* ---------------- profile card ---------------- */}
           <Reveal delay={120} className="lg:pt-2">
-            <div className="relative overflow-hidden rounded-2xl border border-line bg-surface p-6 sm:p-7">
+            <Card className="p-6 sm:p-7">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute -top-24 -right-16 size-56 rounded-full bg-[radial-gradient(circle,var(--glow),transparent_68%)] blur-2xl"
@@ -99,7 +99,7 @@ export function About() {
                   <TechBadge key={technology}>{technology}</TechBadge>
                 ))}
               </div>
-            </div>
+            </Card>
           </Reveal>
         </div>
       </Container>

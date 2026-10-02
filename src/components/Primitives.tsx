@@ -57,9 +57,9 @@ export function Card({
   return (
     <div
       className={cn(
-        'relative rounded-2xl border border-line bg-surface',
+        'relative rounded-2xl border border-line-strong bg-surface-2 shadow-soft',
         interactive &&
-          'transition-[border-color,box-shadow,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-line-strong hover:shadow-[0_24px_48px_-30px_var(--glow)]',
+          'transition-[border-color,box-shadow,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-[0_24px_48px_-30px_var(--glow)]',
         className,
       )}
     >
