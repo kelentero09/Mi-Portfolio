@@ -1,5 +1,5 @@
 import { Container } from '../components/Container';
-import { ArrowUpRightIcon, GitHubIcon, MailIcon } from '../components/Icons';
+import { ArrowUpRightIcon, GitHubIcon, LinkedInIcon, MailIcon } from '../components/Icons';
 import { Monogram } from '../components/Logo';
 import { footerNav } from '../data/navigation';
 import { footerContent, site } from '../data/site';
@@ -26,6 +26,9 @@ export function Footer() {
             </div>
             <p className="mt-5 text-[0.9rem] leading-relaxed text-fg-subtle">
               {footerContent.note}
+            </p>
+            <p className="mt-3 font-mono text-[0.72rem] tracking-[0.08em] text-fg-subtle">
+              {site.location} · {site.availability}
             </p>
           </div>
 
@@ -63,6 +66,17 @@ export function Footer() {
                 >
                   <GitHubIcon className="size-3.5" />
                   GitHub
+                </a>
+              </li>
+              <li>
+                <a
+                  href={site.linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-[0.88rem] text-fg-muted transition-colors duration-300 hover:text-accent"
+                >
+                  <LinkedInIcon className="size-3.5" />
+                  LinkedIn
                 </a>
               </li>
               <li>

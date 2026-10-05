@@ -3,11 +3,11 @@ import { Section } from '../components/Section';
 import { SectionHeading } from '../components/SectionHeading';
 import { Reveal } from '../components/Reveal';
 import { TechIcon } from '../components/TechIcon';
-import { CodeIcon, LayersIcon, WrenchIcon, LayoutIcon } from '../components/Icons';
+import { CodeIcon, LayersIcon, PlugIcon, WrenchIcon, LayoutIcon } from '../components/Icons';
 import { skillGroups } from '../data/skills';
 import { skillsContent } from '../data/site';
 
-const groupIcons = [CodeIcon, LayersIcon, WrenchIcon, LayoutIcon];
+const groupIcons = [CodeIcon, LayersIcon, LayersIcon, PlugIcon, WrenchIcon, LayoutIcon];
 
 export function Skills() {
   const totalSkills = skillGroups.reduce((total, group) => total + group.skills.length, 0);
@@ -26,7 +26,7 @@ export function Skills() {
           }
         />
 
-        {/* Two columns from `md` up: the four groups fill a balanced 2x2 grid
+        {/* Two columns from `md` up: groups fill a balanced grid
             at every width, so the last row is never left with a gap. */}
         <div className="mt-14 grid gap-5 md:grid-cols-2">
           {skillGroups.map((group, groupIndex) => {

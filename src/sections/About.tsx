@@ -10,6 +10,7 @@ import { aboutContent, site } from '../data/site';
 const factRows = [
   { icon: MapPinIcon, label: 'Location', value: site.location },
   { icon: ClockIcon, label: 'Experience', value: site.experience },
+  { icon: CheckIcon, label: 'Availability', value: site.availability },
 ];
 
 export function About() {
@@ -95,7 +96,7 @@ export function About() {
               </dl>
 
               <div className="relative mt-6 flex flex-wrap gap-1.5">
-                {['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js'].map((technology) => (
+                {['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Laravel', 'PostgreSQL', 'Saleor'].map((technology) => (
                   <TechBadge key={technology}>{technology}</TechBadge>
                 ))}
               </div>

@@ -4,47 +4,20 @@ import { ArrowRightIcon, GitHubIcon, MapPinIcon, ClockIcon, CodeIcon } from '../
 import { heroContent, site } from '../data/site';
 
 /* -------------------------------------------------------------------------- */
-/*  Decorative code window                                                    */
+/*  Profile photo                                                             */
 /* -------------------------------------------------------------------------- */
 
-type Tone = 'kw' | 'key' | 'string' | 'accent' | 'muted' | 'plain';
-
-const toneClass: Record<Tone, string> = {
-  kw: 'text-accent',
-  key: 'text-fg-subtle',
-  string: 'text-fg',
-  accent: 'text-accent/80',
-  muted: 'text-fg-subtle',
-  plain: 'text-fg-muted',
-};
-
-const codeLines: { indent?: number; tokens: [string, Tone][] }[] = [
-  { tokens: [['const', 'kw'], [' profile ', 'plain'], ['= {', 'plain']] },
-  { tokens: [['name', 'key'], [': ', 'plain'], ["'Michael Entero'", 'string'], [',', 'plain']] },
-  { tokens: [['role', 'key'], [': ', 'plain'], ["'Web Developer'", 'string'], [',', 'plain']] },
-  { tokens: [['location', 'key'], [': ', 'plain'], ["'Davao City, PH'", 'string'], [',', 'plain']] },
-  { tokens: [['experience', 'key'], [': ', 'plain'], ["'4+ years'", 'string'], [',', 'plain']] },
-  { tokens: [['focus', 'key'], [': [', 'plain']] },
-  { indent: 1, tokens: [["'Web Development'", 'string'], [',', 'plain']] },
-  { indent: 1, tokens: [["'Frontend Development'", 'string'], [',', 'plain']] },
-  { indent: 1, tokens: [["'Full-Stack Development'", 'string'], [',', 'plain']] },
-  { indent: 1, tokens: [["'Business Websites'", 'string'], [',', 'plain']] },
-  { tokens: [['],', 'plain']] },
-  { tokens: [['stack', 'key'], [': [', 'plain'], ["'React'", 'string'], [', ', 'plain'], ["'Next.js'", 'string'], [', ', 'plain'], ["'TypeScript'", 'string'], [', ', 'plain'], ["'Node.js'", 'string'], ['],', 'plain']] },
-  { tokens: [['}', 'plain'], [';', 'plain']] },
-];
-
-function CodeWindow() {
+function ProfilePhoto() {
   return (
-    <div className="relative" aria-hidden="true">
+    <div className="relative mx-auto w-full max-w-sm sm:max-w-md lg:max-w-none">
       {/* floating chips */}
-      <div className="absolute -top-5 -left-4 hidden xl:block">
+      <div className="absolute -top-5 -left-4 z-10 hidden xl:block">
         <span className="inline-flex animate-float items-center gap-2 rounded-full border border-line bg-surface/90 px-3 py-1.5 font-mono text-[0.68rem] text-fg-muted backdrop-blur-sm motion-reduce:animate-none">
           <span className="size-1.5 rounded-full bg-accent" />
           React
         </span>
       </div>
-      <div className="absolute -right-3 -bottom-5 hidden xl:block">
+      <div className="absolute -right-3 -bottom-5 z-10 hidden xl:block">
         <span
           className="inline-flex animate-float items-center gap-2 rounded-full border border-line bg-surface/90 px-3 py-1.5 font-mono text-[0.68rem] text-fg-muted backdrop-blur-sm motion-reduce:animate-none"
           style={{ animationDelay: '1.4s' }}
@@ -54,39 +27,28 @@ function CodeWindow() {
         </span>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-line bg-surface-2/70 shadow-[0_30px_70px_-40px_var(--glow)] backdrop-blur-sm">
-        <div className="flex items-center gap-2 border-b border-line px-4 py-3">
-          <span className="flex gap-1.5">
-            <span className="size-2.5 rounded-full bg-fg-subtle/50" />
-            <span className="size-2.5 rounded-full bg-fg-subtle/35" />
-            <span className="size-2.5 rounded-full bg-fg-subtle/25" />
+      <div className="overflow-hidden rounded-3xl border border-line bg-surface-2/70 shadow-[0_30px_70px_-40px_var(--glow)]">
+        <img
+          src={site.profileImage}
+          alt="Portrait of Michael Entero, Web Developer"
+          width={640}
+          height={640}
+          fetchPriority="high"
+          className="aspect-square w-full object-cover brightness-100 dark:brightness-95 dark:contrast-[1.02]"
+        />
+        <div className="flex items-center justify-between gap-4 border-t border-line bg-surface/80 px-5 py-4 backdrop-blur-sm">
+          <div className="min-w-0">
+            <p className="truncate text-[0.95rem] font-semibold tracking-tight text-fg">
+              {site.name}
+            </p>
+            <p className="mt-0.5 font-mono text-[0.66rem] tracking-[0.14em] text-fg-subtle uppercase">
+              {site.role} · Davao City, PH
+            </p>
+          </div>
+          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-accent/35 bg-accent-soft px-2.5 py-1 font-mono text-[0.64rem] font-medium tracking-[0.08em] text-accent uppercase">
+            <span className="size-1.5 rounded-full bg-accent" />
+            Remote
           </span>
-          <span className="ml-2 font-mono text-[0.7rem] text-fg-subtle">developer.ts</span>
-        </div>
-
-        <div className="overflow-x-auto px-4 py-4 sm:px-5">
-          <pre className="font-mono text-[0.72rem] leading-[1.75] sm:text-[0.78rem]">
-            <code>
-              {codeLines.map((line, index) => (
-                <span key={index} className="flex">
-                  <span className="mr-4 w-4 shrink-0 text-right text-fg-subtle/60 select-none">
-                    {index + 1}
-                  </span>
-                  <span className="whitespace-pre">
-                    {line.indent ? '  ' : ''}
-                    {line.tokens.map(([text, tone], tokenIndex) => (
-                      <span key={tokenIndex} className={toneClass[tone]}>
-                        {text}
-                      </span>
-                    ))}
-                    {index === codeLines.length - 1 ? (
-                      <span className="ml-0.5 inline-block h-[1.05em] w-[0.45em] translate-y-[0.15em] animate-caret bg-accent motion-reduce:animate-none" />
-                    ) : null}
-                  </span>
-                </span>
-              ))}
-            </code>
-          </pre>
         </div>
       </div>
     </div>
@@ -121,7 +83,7 @@ export function Hero() {
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent/60 motion-reduce:animate-none" />
                 <span className="relative inline-flex size-2 rounded-full bg-accent" />
               </span>
-              Available for opportunities
+              Available for Remote Work
             </p>
 
             <h1 className="mt-7 text-display text-balance">
@@ -165,7 +127,7 @@ export function Hero() {
 
           {/* ---------------- visual ---------------- */}
           <div className="lg:pl-4">
-            <CodeWindow />
+            <ProfilePhoto />
           </div>
         </div>
       </Container>

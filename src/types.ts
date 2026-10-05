@@ -84,3 +84,19 @@ export interface ExperienceFact {
   label: string;
   value: string;
 }
+
+export interface ExperienceRole {
+  company: string;
+  title: string;
+  period: string;
+  current?: boolean;
+  highlights: string[];
+}
+
+export interface EducationEntry {
+  degree: string;
+  school: string;
+  detail: string;
+  period: string;
+  achievements: string[];
+}

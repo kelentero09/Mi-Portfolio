@@ -3,7 +3,7 @@ import { Section } from '../components/Section';
 import { Button } from '../components/Button';
 import { Reveal } from '../components/Reveal';
 import { Eyebrow, Card } from '../components/Primitives';
-import { ArrowUpRightIcon, GitHubIcon, MailIcon, MapPinIcon } from '../components/Icons';
+import { ArrowUpRightIcon, CheckIcon, GitHubIcon, LinkedInIcon, MailIcon, MapPinIcon } from '../components/Icons';
 import { Monogram } from '../components/Logo';
 import { contactContent, site } from '../data/site';
 
@@ -88,6 +88,13 @@ export function Contact() {
                   </div>
                   <div className="flex items-center justify-between gap-4">
                     <dt className="flex items-center gap-2 text-[0.86rem] text-fg-subtle">
+                      <CheckIcon className="size-4 text-accent/80" />
+                      Availability
+                    </dt>
+                    <dd className="text-[0.86rem] font-medium text-fg">{site.availability}</dd>
+                  </div>
+                  <div className="flex items-center justify-between gap-4">
+                    <dt className="flex items-center gap-2 text-[0.86rem] text-fg-subtle">
                       <GitHubIcon className="size-4 text-accent/80" />
                       GitHub
                     </dt>
@@ -99,6 +106,22 @@ export function Contact() {
                         className="block truncate font-mono text-[0.8rem] font-medium text-fg underline decoration-line-strong underline-offset-4 transition-colors duration-300 hover:text-accent hover:decoration-accent"
                       >
                         @{site.githubHandle}
+                      </a>
+                    </dd>
+                  </div>
+                  <div className="flex items-center justify-between gap-4">
+                    <dt className="flex items-center gap-2 text-[0.86rem] text-fg-subtle">
+                      <LinkedInIcon className="size-4 text-accent/80" />
+                      LinkedIn
+                    </dt>
+                    <dd className="min-w-0">
+                      <a
+                        href={site.linkedinUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block truncate font-mono text-[0.8rem] font-medium text-fg underline decoration-line-strong underline-offset-4 transition-colors duration-300 hover:text-accent hover:decoration-accent"
+                      >
+                        {site.linkedinHandle}
                       </a>
                     </dd>
                   </div>
