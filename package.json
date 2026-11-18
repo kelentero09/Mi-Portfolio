@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
     "lint": "eslint .",
-    "previews": "node scripts/generate-previews.mjs"
+    "previews": "node scripts/generate-previews.mjs",
+    "activity": "node scripts/fetch-contributions.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",

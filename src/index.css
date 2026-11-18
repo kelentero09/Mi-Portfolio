@@ -241,6 +241,17 @@
     }
   }
 
+  /* GitHub activity graph: cells stay hidden until the graph scrolls into
+     view, then cascade in one week (`--week`) at a time. */
+  .contribution-cell {
+    opacity: 0;
+  }
+
+  .contribution-in .contribution-cell {
+    animation: cell-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--week, 0) * 14ms);
+  }
+
   /* Staggered entrance for the hero. Set `--i` to order the elements. */
   .hero-in {
     animation: hero-in 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -258,6 +269,17 @@
 /* ---------------------------------------------------------------------------
    Motion
 --------------------------------------------------------------------------- */
+@keyframes cell-in {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @keyframes hero-in {
   from {
     opacity: 0;

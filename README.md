@@ -49,6 +49,7 @@ them. You should not need to touch a component to change what the site says.
 | `src/data/skills.ts` | Skill groups shown in the Skills section |
 | `src/data/services.ts` | Capabilities and the development process steps |
 | `src/data/navigation.ts` | Header and footer anchor links |
+| `src/data/contributions.json` | GitHub activity graph data — generated, do not edit by hand |
 
 ### Adding a project
 
@@ -69,6 +70,17 @@ feature(4) + standard(2) | standard(2) x3 | standard(2) + feature(4)
 The `stack` field (`next`, `react` or `static`) puts the project under the
 matching filter tab above the grid. While a filter is active every card uses
 the compact layout, so any subset still fills its rows.
+
+### GitHub activity graph
+
+The graph reads `src/data/contributions.json`, a snapshot of the GitHub
+contribution calendar. The deploy workflow refreshes it on every push and once
+a day on a schedule. To refresh it locally (needs a logged-in `gh` CLI or a
+`GITHUB_TOKEN`):
+
+```
+npm run activity
+```
 
 ### Changing the domain
 

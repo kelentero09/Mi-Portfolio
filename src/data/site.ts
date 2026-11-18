@@ -67,8 +67,9 @@ export const contactContent = {
 } as const;
 
 export const githubContent = {
+  eyebrow: 'GitHub Activity',
   heading: 'Building, experimenting, and learning through code.',
-  text: 'Explore my repositories and development work on GitHub.',
+  text: 'My contributions over the past year, straight from GitHub. Hover or tap a day to see its date and count.',
   buttonLabel: 'View GitHub',
 } as const;
 
