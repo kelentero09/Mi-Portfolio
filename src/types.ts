@@ -7,6 +7,9 @@ export interface NavItem {
 
 export type ProjectSize = 'feature' | 'standard';
 
+/** How a project is built — drives the filter tabs above the grid. */
+export type ProjectStack = 'next' | 'react' | 'static';
+
 export interface Project {
   /** Stable id, also used for the preview image filename. */
   slug: string;
@@ -26,6 +29,8 @@ export interface Project {
   previewAlt: string;
   /** Controls the editorial grid layout. */
   size: ProjectSize;
+  /** Used by the project filter. */
+  stack: ProjectStack;
 }
 
 export type SkillIconName =

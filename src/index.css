@@ -19,6 +19,7 @@
   --fg-muted: #47505f;
   --fg-subtle: #6b7480;
   --accent: #0369a1;
+  --accent-2: #4f46e5;
   --accent-contrast: #ffffff;
   --accent-soft: rgb(3 105 161 / 0.1);
   --grid-line: rgb(15 18 25 / 0.055);
@@ -36,6 +37,7 @@
   --fg-muted: #a3abbb;
   --fg-subtle: #767e8d;
   --accent: #38bdf8;
+  --accent-2: #818cf8;
   --accent-contrast: #04121b;
   --accent-soft: rgb(56 189 248 / 0.12);
   --grid-line: rgb(255 255 255 / 0.05);
@@ -93,6 +95,7 @@
   --color-fg-muted: var(--fg-muted);
   --color-fg-subtle: var(--fg-subtle);
   --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
   --color-accent-contrast: var(--accent-contrast);
   --color-accent-soft: var(--accent-soft);
 }
@@ -200,6 +203,50 @@
     box-shadow: inset 0 0 0 1px var(--line);
   }
 
+  /* Two-tone accent used on the hero headline. `clone` keeps the gradient
+     intact on every line when the phrase wraps. */
+  .text-gradient-accent {
+    background: linear-gradient(100deg, var(--accent) 8%, var(--accent-2) 96%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* Cursor-following glow for cards. The host needs `relative` and
+     `overflow-hidden`; `trackSpotlight` in lib/motion.ts feeds the position. */
+  .spotlight::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+      24rem circle at var(--spot-x, 50%) var(--spot-y, 0%),
+      var(--glow),
+      transparent 62%
+    );
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .spotlight:hover::after {
+    opacity: 1;
+  }
+
+  @media (hover: none) {
+    .spotlight::after {
+      display: none;
+    }
+  }
+
+  /* Staggered entrance for the hero. Set `--i` to order the elements. */
+  .hero-in {
+    animation: hero-in 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i, 0) * 90ms + 60ms);
+  }
+
   .text-gradient-fg {
     background: linear-gradient(180deg, var(--fg) 30%, var(--fg-muted) 130%);
     -webkit-background-clip: text;
@@ -211,6 +258,32 @@
 /* ---------------------------------------------------------------------------
    Motion
 --------------------------------------------------------------------------- */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* View Transitions — used for the theme switch and the project filter
+   (see lib/motion.ts). Named cards morph between grid positions; everything
+   else cross-fades. */
+::view-transition-group(*) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+}
+
 @keyframes me-float {
   0%,
   100% {
@@ -280,6 +353,7 @@
   *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }

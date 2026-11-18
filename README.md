@@ -62,8 +62,13 @@ four columns and a `standard` card spans two. Order the array so each row adds
 up:
 
 ```
-feature(4) + standard(2) | standard(2) x3 | feature(4) + standard(2)
+feature(4) + standard(2) | standard(2) x3 | standard(2) + feature(4)
+| standard(2) x3 | standard(2) x3
 ```
+
+The `stack` field (`next`, `react` or `static`) puts the project under the
+matching filter tab above the grid. While a filter is active every card uses
+the compact layout, so any subset still fills its rows.
 
 ### Changing the domain
 

@@ -20,7 +20,7 @@ interface ButtonProps {
 }
 
 const base =
-  'group relative inline-flex select-none items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap transition-[background-color,border-color,color,transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:translate-y-px disabled:pointer-events-none disabled:opacity-60';
+  'group relative inline-flex select-none items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap transition-[background-color,border-color,color,transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 active:translate-y-px active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60';
 
 const variants: Record<Variant, string> = {
   primary:
@@ -51,7 +51,11 @@ export function Button({
     <>
       {leading}
       <span>{children}</span>
-      {trailing}
+      {trailing ? (
+        <span className="transition-transform duration-300 ease-out-soft group-hover:translate-x-1 motion-reduce:transition-none">
+          {trailing}
+        </span>
+      ) : null}
     </>
   );
 

@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
+import { withViewTransition } from '../lib/motion';
 import type { Theme } from '../types';
 
 const STORAGE_KEY = 'theme';
@@ -22,7 +23,9 @@ function readInitialTheme(): Theme {
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(readInitialTheme);
 
-  useEffect(() => {
+  // Layout effect so the class is on <html> before a View Transition takes
+  // its "after" snapshot.
+  useLayoutEffect(() => {
     const root = document.documentElement;
     root.classList.toggle('dark', theme === 'dark');
     root.style.colorScheme = theme;
@@ -34,7 +37,9 @@ export function useTheme() {
   }, [theme]);
 
   const toggleTheme = useCallback(() => {
-    setTheme((current) => (current === 'dark' ? 'light' : 'dark'));
+    withViewTransition(() => {
+      setTheme((current) => (current === 'dark' ? 'light' : 'dark'));
+    });
   }, []);
 
   return { theme, setTheme, toggleTheme };

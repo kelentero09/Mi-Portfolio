@@ -5,6 +5,7 @@ import { Reveal } from '../components/Reveal';
 import { TechIcon } from '../components/TechIcon';
 import { CodeIcon, LayersIcon, PlugIcon, WrenchIcon, LayoutIcon } from '../components/Icons';
 import { skillGroups } from '../data/skills';
+import { trackSpotlight } from '../lib/motion';
 import { skillsContent } from '../data/site';
 
 const groupIcons = [CodeIcon, LayersIcon, LayersIcon, PlugIcon, WrenchIcon, LayoutIcon];
@@ -33,8 +34,11 @@ export function Skills() {
             const GroupIcon = groupIcons[groupIndex] ?? CodeIcon;
             return (
               <Reveal key={group.id} delay={groupIndex * 90}>
-                <article className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 transition-[border-color,box-shadow] duration-500 hover:border-line-strong hover:shadow-[0_24px_48px_-34px_var(--glow)] sm:p-7">
-                  <header className="flex items-start gap-4">
+                <article
+                  onPointerMove={trackSpotlight}
+                  className="spotlight group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface p-6 transition-[border-color,box-shadow,transform] duration-500 ease-out-soft hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_24px_48px_-34px_var(--glow)] sm:p-7"
+                >
+                  <header className="relative z-10 flex items-start gap-4">
                     <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-line bg-surface-2 text-accent transition-colors duration-300 group-hover:border-accent/45">
                       <GroupIcon className="size-[1.15rem]" />
                     </span>
@@ -46,10 +50,10 @@ export function Skills() {
                     </div>
                   </header>
 
-                  <ul className="mt-7 flex-1 space-y-4 border-t border-line pt-6">
+                  <ul className="relative z-10 mt-7 flex-1 space-y-4 border-t border-line pt-6">
                     {group.skills.map((skill) => (
-                      <li key={skill.name} className="flex items-start gap-3.5">
-                        <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-lg border border-line bg-surface-2 text-fg-muted">
+                      <li key={skill.name} className="group/skill flex items-start gap-3.5">
+                        <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-lg border border-line bg-surface-2 text-fg-muted transition-[color,border-color,transform] duration-300 ease-out-soft group-hover/skill:-translate-y-0.5 group-hover/skill:border-accent/45 group-hover/skill:text-accent">
                           <TechIcon name={skill.icon} className="size-4" />
                         </span>
                         <span className="min-w-0">

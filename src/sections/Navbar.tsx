@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { navigation, navigationIds } from '../data/navigation';
 import { site } from '../data/site';
 import { cn } from '../lib/cn';
@@ -38,13 +38,87 @@ function ScrollProgress() {
   }, []);
 
   return (
-    <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-transparent">
+    <div aria-hidden="true" className="absolute inset-x-0 top-0 h-0.5 bg-transparent">
       <div
         ref={barRef}
-        className="h-full origin-left bg-accent/70"
+        className="h-full origin-left bg-gradient-to-r from-accent to-accent-2"
         style={{ transform: 'scaleX(0)' }}
       />
     </div>
+  );
+}
+
+/**
+ * Desktop links with a pill that slides to the active item. The pill is
+ * positioned by writing to the DOM directly, so scrolling between sections
+ * never re-renders the list just to move it.
+ */
+function DesktopNav({ active }: { active: string }) {
+  const listRef = useRef<HTMLUListElement>(null);
+  const pillRef = useRef<HTMLSpanElement>(null);
+  const placedRef = useRef(false);
+
+  useLayoutEffect(() => {
+    const list = listRef.current;
+    const pill = pillRef.current;
+    if (!list || !pill) return;
+
+    const place = () => {
+      const link = list.querySelector<HTMLElement>(`[data-nav="${active}"]`);
+      if (!link || link.offsetWidth === 0) {
+        pill.style.opacity = '0';
+        return;
+      }
+      // Snap into place the first time; animate every move after that.
+      if (!placedRef.current) pill.style.transitionDuration = '0s';
+      pill.style.width = `${link.offsetWidth}px`;
+      pill.style.transform = `translate3d(${link.offsetLeft}px, 0, 0)`;
+      pill.style.opacity = '1';
+      if (!placedRef.current) {
+        placedRef.current = true;
+        void pill.offsetWidth;
+        pill.style.transitionDuration = '';
+      }
+    };
+
+    place();
+    // Re-measure when fonts load or the bar is resized / un-hidden.
+    const observer = new ResizeObserver(place);
+    observer.observe(list);
+    return () => observer.disconnect();
+  }, [active]);
+
+  return (
+    <nav aria-label="Primary" className="hidden lg:block">
+      <ul
+        ref={listRef}
+        className="relative flex items-center gap-1 rounded-full border border-line bg-surface-2/50 p-1 backdrop-blur-sm"
+      >
+        <span
+          ref={pillRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute top-1 bottom-1 left-0 rounded-full border border-accent/25 bg-accent-soft opacity-0 transition-[transform,width,opacity] duration-500 ease-out-soft motion-reduce:transition-none"
+        />
+        {navigation.map((item) => {
+          const isActive = active === item.id;
+          return (
+            <li key={item.id}>
+              <a
+                href={`#${item.id}`}
+                data-nav={item.id}
+                aria-current={isActive ? 'true' : undefined}
+                className={cn(
+                  'relative block rounded-full px-3.5 py-2 text-[0.82rem] font-medium transition-colors duration-300',
+                  isActive ? 'text-accent' : 'text-fg-muted hover:text-fg',
+                )}
+              >
+                {item.label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }
 
@@ -93,9 +167,9 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500',
+        'fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter,box-shadow] duration-500 [view-transition-name:site-header]',
         scrolled || menuOpen
-          ? 'border-b border-line bg-surface/80 backdrop-blur-xl'
+          ? 'border-b border-line bg-surface/80 shadow-[0_12px_32px_-24px_hsl(var(--shadow-color)/0.5)] backdrop-blur-xl'
           : 'border-b border-transparent bg-transparent',
       )}
     >
@@ -106,34 +180,7 @@ export function Navbar() {
           <Logo />
 
           {/* ---------------- desktop navigation ---------------- */}
-          <nav aria-label="Primary" className="hidden lg:block">
-            <ul className="flex items-center gap-1 rounded-full border border-line bg-surface-2/50 p-1 backdrop-blur-sm">
-              {navigation.map((item) => {
-                const isActive = active === item.id;
-                return (
-                  <li key={item.id}>
-                    <a
-                      href={`#${item.id}`}
-                      aria-current={isActive ? 'true' : undefined}
-                      className={cn(
-                        'relative block rounded-full px-3.5 py-2 text-[0.82rem] font-medium transition-colors duration-300',
-                        isActive ? 'text-accent' : 'text-fg-muted hover:text-fg',
-                      )}
-                    >
-                      {item.label}
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          'absolute inset-x-3.5 -bottom-0.5 h-px origin-center bg-accent transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)]',
-                          isActive ? 'scale-x-100' : 'scale-x-0',
-                        )}
-                      />
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
+          <DesktopNav active={active} />
 
           {/* ---------------- right-hand actions ---------------- */}
           <div className="flex items-center gap-2">
@@ -153,12 +200,23 @@ export function Navbar() {
               ref={toggleRef}
               type="button"
               onClick={() => setMenuOpen((open) => !open)}
-              className="grid size-10 place-items-center rounded-full border border-line bg-surface-2/70 text-fg transition-[color,border-color] duration-300 hover:text-accent lg:hidden"
+              className="relative grid size-10 place-items-center rounded-full border border-line bg-surface-2/70 text-fg transition-[color,border-color,transform] duration-300 hover:text-accent active:scale-90 lg:hidden"
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             >
-              {menuOpen ? <CloseIcon className="size-5" /> : <MenuIcon className="size-5" />}
+              <MenuIcon
+                className={cn(
+                  'absolute size-5 transition-[opacity,transform] duration-400 ease-out-soft motion-reduce:transition-none',
+                  menuOpen ? 'scale-50 rotate-90 opacity-0' : 'scale-100 rotate-0 opacity-100',
+                )}
+              />
+              <CloseIcon
+                className={cn(
+                  'absolute size-5 transition-[opacity,transform] duration-400 ease-out-soft motion-reduce:transition-none',
+                  menuOpen ? 'scale-100 rotate-0 opacity-100' : 'scale-50 -rotate-90 opacity-0',
+                )}
+              />
             </button>
           </div>
         </div>
@@ -168,19 +226,36 @@ export function Navbar() {
       <div
         id="mobile-navigation"
         ref={panelRef}
-        hidden={!menuOpen}
-        className="lg:hidden"
+        // `inert` keeps the collapsed links out of the tab order and away
+        // from assistive tech, as `hidden` did, while still allowing the
+        // height to animate.
+        inert={!menuOpen}
+        className={cn(
+          'grid transition-[grid-template-rows,opacity] duration-500 ease-out-soft motion-reduce:transition-none lg:hidden',
+          menuOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
+        )}
       >
-        <div className="border-t border-line bg-surface/95 backdrop-blur-xl">
+        <div className="max-h-[calc(100dvh-4rem)] min-h-0 overflow-hidden overflow-y-auto bg-surface/95 backdrop-blur-xl">
           <Container>
             <nav aria-label="Mobile" className="py-6">
               <ul className="flex flex-col">
                 {navigation.map((item, index) => (
-                  <li key={item.id} className="border-b border-line last:border-b-0">
+                  <li
+                    key={item.id}
+                    className={cn(
+                      'border-b border-line transition-[opacity,transform] duration-500 ease-out-soft last:border-b-0 motion-reduce:transition-none',
+                      menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0',
+                    )}
+                    style={{ transitionDelay: menuOpen ? `${90 + index * 45}ms` : '0ms' }}
+                  >
                     <a
                       href={`#${item.id}`}
                       onClick={closeMenu}
-                      className="flex items-baseline justify-between gap-4 py-4 text-lg font-medium tracking-tight text-fg"
+                      aria-current={active === item.id ? 'true' : undefined}
+                      className={cn(
+                        'flex items-baseline justify-between gap-4 py-4 text-lg font-medium tracking-tight transition-colors duration-300',
+                        active === item.id ? 'text-accent' : 'text-fg',
+                      )}
                     >
                       {item.label}
                       <span className="font-mono text-[0.7rem] text-fg-subtle">

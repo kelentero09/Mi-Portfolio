@@ -51,7 +51,9 @@ export function About() {
 
           {/* ---------------- profile card ---------------- */}
           <Reveal delay={120} className="lg:pt-2">
-            <Card className="p-6 sm:p-7">
+            {/* `overflow-hidden` keeps the corner glow inside the card; left to
+                spill, it widens the mobile layout viewport past the screen. */}
+            <Card className="overflow-hidden p-6 sm:p-7">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute -top-24 -right-16 size-56 rounded-full bg-[radial-gradient(circle,var(--glow),transparent_68%)] blur-2xl"

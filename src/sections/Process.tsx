@@ -26,10 +26,10 @@ export function Process() {
             {processSteps.map((step, index) => (
               <li key={step.step}>
                 <Reveal delay={index * 90}>
-                  <div className="relative">
+                  <div className="group relative">
                     <span className="relative z-10 inline-flex items-center gap-3">
-                      <span className="grid size-6 place-items-center rounded-full border border-line bg-surface">
-                        <span className="size-1.5 rounded-full bg-accent" />
+                      <span className="grid size-6 place-items-center rounded-full border border-line bg-surface transition-[border-color,box-shadow] duration-500 group-hover:border-accent/60 group-hover:shadow-[0_0_0_5px_var(--accent-soft)]">
+                        <span className="size-1.5 rounded-full bg-accent transition-transform duration-500 ease-out-soft group-hover:scale-150" />
                       </span>
                       <span className="font-mono text-[0.72rem] tracking-[0.16em] text-accent">
                         {step.step}
